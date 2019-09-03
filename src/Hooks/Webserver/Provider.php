@@ -28,6 +28,6 @@ class Provider extends HooksProvider
     ];
 
     protected $singletons = [
-        Manager::class
+        Manager::class,
     ];
 }
