@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @see https://github.com/tenancy
  */
 
-namespace Tenancy\Hooks\Webserver\Hooks;
+namespace Tenancy\Hooks\Webserver\Events;
 
 use Tenancy\Identification\Contracts\Tenant;
 

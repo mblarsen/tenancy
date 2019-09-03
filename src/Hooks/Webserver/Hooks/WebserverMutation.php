@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tenancy\Hooks\Webserver\Hooks;
 
 use Illuminate\Contracts\View\Factory;
+use Tenancy\Hooks\Webserver\Events\Configuring;
 use Tenancy\Lifecycle\Hook;
 use Tenancy\Tenant\Events\Deleted;
 
