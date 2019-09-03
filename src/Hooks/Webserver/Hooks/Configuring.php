@@ -46,6 +46,7 @@ class Configuring
      * The path for the vHost file to be saved into.
      *
      * @param string $path
+     *
      * @return $this
      */
     public function path(string $path)
@@ -60,6 +61,7 @@ class Configuring
      *
      * @param string $view
      * @param array  $data
+     *
      * @return $this
      */
     public function view(string $view, array $data = [])

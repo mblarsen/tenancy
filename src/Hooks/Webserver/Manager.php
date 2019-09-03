@@ -18,5 +18,4 @@ namespace Tenancy\Hooks\Webserver;
 
 class Manager
 {
-
 }
