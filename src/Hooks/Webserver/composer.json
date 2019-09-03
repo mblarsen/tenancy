@@ -1,0 +1,33 @@
+{
+    "name": "tenancy/hooks-webserver",
+    "description": "The tenancy/tenancy webserver mutations",
+    "keywords": ["hooks", "tenancy", "webserver"],
+    "license": "MIT",
+    "require": {
+        "tenancy/framework": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tenancy\\Hooks\\Database\\": ""
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniël Klabbers",
+            "email": "daniel@klabbers.email",
+            "homepage": "http://luceos.com"
+        },
+        {
+            "name": "Arlon Antonius",
+            "email": "opensource@arlonantonius.com",
+            "homepage": "https://arlonantonius.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tenancy\\Hooks\\Webserver\\Provider"
+            ]
+        }
+    }
+}
