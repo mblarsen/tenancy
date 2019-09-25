@@ -101,6 +101,7 @@ jobs:
             - checkout
             - attach_workspace:
                   at: ./
+            - run: apt-get -yqq install gnupg
             - run: curl -sSL https://packages.blackfire.io/gpg.key | apt-key add -
             - run: echo "deb http://packages.blackfire.io/debian any main" | sudo tee /etc/apt/sources.list.d/blackfire.list
             - run: apt-get -yqq update
