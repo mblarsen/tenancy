@@ -101,11 +101,13 @@ jobs:
             - checkout
             - attach_workspace:
                   at: ./
+            - run: apt-get -yqq install wget
             - run: wget -q -O - https://packages.blackfire.io/gpg.key | apt-key add -
             - run: echo "deb http://packages.blackfire.io/debian any main" | sudo tee /etc/apt/sources.list.d/blackfire.list
             - run: apt-get -yqq update
-            - run: apt-get -yqq install libpq-dev libpng-dev default-mysql-client
+            - run: apt-get -yqq install libpq-dev libpng-dev default-mysql-client blackfire-agent blackfire-php
             - run: docker-php-ext-install pdo_mysql pdo_pgsql
+          - - run: blackfire-agent -register
             - run: mysql --host=mysql -e "grant all privileges on *.* to 'testing'@'%' with grant option;"
             - run: ./vendor/bin/phpunit
 
