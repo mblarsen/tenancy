@@ -91,6 +91,23 @@ jobs:
                   at: ./
             - run: ./vendor/bin/phpcs
 
+    blackfire:
+        docker:
+            - image: php:7.2
+              environment: *environment
+            - *mysql
+        working_directory: ~/repo
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: ./
+            - run: apt-get -yqq update
+            - run: apt-get -yqq install libpq-dev libpng-dev default-mysql-client
+            - run: docker-php-ext-install pdo_mysql pdo_pgsql
+            - run: mysql --host=mysql -e "grant all privileges on *.* to 'testing'@'%' with grant option;"
+            - run: ./vendor/bin/phpunit
+
+
     coverage:
         docker:
             - image: php:7.2
@@ -134,6 +151,10 @@ workflows:
                       - "php-7.2"
                       - "php-7.3"
             - coverage:
+                  requires:
+                      - "php-7.2"
+                      - "php-7.3"
+            - blackfire:
                   requires:
                       - "php-7.2"
                       - "php-7.3"
