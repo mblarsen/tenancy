@@ -101,6 +101,8 @@ jobs:
             - checkout
             - attach_workspace:
                   at: ./
+            - run: wget -q -O - https://packages.blackfire.io/gpg.key | apt-key add -
+            - run: echo "deb http://packages.blackfire.io/debian any main" | sudo tee /etc/apt/sources.list.d/blackfire.list
             - run: apt-get -yqq update
             - run: apt-get -yqq install libpq-dev libpng-dev default-mysql-client
             - run: docker-php-ext-install pdo_mysql pdo_pgsql
