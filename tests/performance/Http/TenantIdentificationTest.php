@@ -18,10 +18,10 @@ namespace Tenancy\Tests\Performance\Http;
 
 use Illuminate\Routing\Router;
 use Tenancy\Identification\Contracts\Tenant;
+use Tenancy\Tests\Identification\Http\Mocks\Hostname;
 use Tenancy\Tests\Performance\Mocks\Http\CleanController;
 use Tenancy\Tests\Performance\Mocks\Http\TenantController;
 use Tenancy\Tests\Performance\TestCase;
-use Tenancy\Tests\Identification\Http\Mocks\Hostname;
 
 class TenantIdentificationTest extends TestCase
 {
