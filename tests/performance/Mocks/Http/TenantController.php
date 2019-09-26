@@ -17,13 +17,13 @@ declare(strict_types=1);
 namespace Tenancy\Tests\Performance\Mocks\Http;
 
 use PHPUnit\Framework\RiskyTestError;
-use Tenancy\Environment;
+use Tenancy\Facades\Tenancy;
 
 class TenantController extends CleanController
 {
-    public function __invoke(Environment $environment)
+    public function __invoke()
     {
-        $tenant = $environment->getTenant();
+        $tenant = Tenancy::getTenant();
 
         if (!$tenant) {
             throw new RiskyTestError('No tenant identified');
