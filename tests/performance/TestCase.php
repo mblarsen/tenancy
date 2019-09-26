@@ -65,6 +65,7 @@ abstract class TestCase extends Test
 
         $probe->disable();
         $cleanProfile = $this->blackfire->endProbe($probe);
+        dd($cleanProfile->getMainCost()->getWallTime());
 
         // Identify and re-run.
         $this->prepareTenantApplication();
