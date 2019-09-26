@@ -36,7 +36,7 @@ abstract class TestCase extends Test
         Views::class,
     ];
     protected $additionalMocks = [
-        __DIR__.'/../unit/Identification/Http/Mocks/factories/'
+        __DIR__.'/../unit/Identification/Http/Mocks/factories/',
     ];
 
     /** @var Client */
