@@ -47,7 +47,7 @@ jobs:
                 name: Wait for other docker instances to be up
                 command: sleep 10
             - run: mysql --host=mysql -e "grant all privileges on *.* to 'testing'@'%' with grant option;"
-            - run: ./vendor/bin/phpunit
+            - run: ./vendor/bin/phpunit --testsuite Unit
             - persist_to_workspace:
                   root: ./
                   paths:
@@ -79,7 +79,7 @@ jobs:
                 name: Wait for other docker instances to be up
                 command: sleep 10
             - run: mysql --host=mysql -e "grant all privileges on *.* to 'testing'@'%' with grant option;"
-            - run: ./vendor/bin/phpunit
+            - run: ./vendor/bin/phpunit --testsuite Unit
 
     phpcs:
         docker:
@@ -109,7 +109,7 @@ jobs:
             - run: docker-php-ext-install pdo_mysql pdo_pgsql
             - run: blackfire-agent -register
             - run: mysql --host=mysql -e "grant all privileges on *.* to 'testing'@'%' with grant option;"
-            - run: ./vendor/bin/phpunit
+            - run: ./vendor/bin/phpunit --testsuite Performance
 
 
     coverage:
@@ -128,7 +128,7 @@ jobs:
             - run: mysql --host=mysql -e "grant all privileges on *.* to 'testing'@'%' with grant option;"
             - run: pecl install xdebug
             - run: docker-php-ext-enable xdebug
-            - run: ./vendor/bin/phpunit --coverage-clover=coverage.xml
+            - run: ./vendor/bin/phpunit --testsuite Unit --coverage-clover=coverage.xml
             - run: bash <(curl -s https://codecov.io/bash)
 
     subsplit:
