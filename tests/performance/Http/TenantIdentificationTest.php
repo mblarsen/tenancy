@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tenancy\Tests\Performance\Http;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Router;
 use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Tests\Identification\Http\Mocks\Hostname;
