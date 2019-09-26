@@ -18,23 +18,24 @@ namespace Tenancy\Tests\Performance;
 
 use Blackfire\Client;
 use Blackfire\ClientConfiguration;
-use Illuminate\Database\Schema\Blueprint;
 use Tenancy\Affects\Filesystems\Provider as Filesystems;
 use Tenancy\Affects\Models\Provider as Models;
 use Tenancy\Affects\Views\Provider as Views;
 use Tenancy\Identification\Contracts\ResolvesTenants;
 use Tenancy\Identification\Drivers\Http\Providers\IdentificationProvider as HttpIdentification;
 use Tenancy\Testing\TestCase as Test;
-use Tenancy\Tests\Identification\Http\Mocks\Hostname;
 
 abstract class TestCase extends Test
 {
+    public $tenant;
+
     protected $additionalProviders = [
         HttpIdentification::class,
         Filesystems::class,
         Models::class,
         Views::class,
     ];
+
     protected $additionalMocks = [
         __DIR__.'/../unit/Identification/Http/Mocks/factories/',
     ];
@@ -42,42 +43,43 @@ abstract class TestCase extends Test
     /** @var Client */
     protected $blackfire;
 
+    protected $resolver;
+
     protected function beforeBoot()
     {
         $this->blackfire = new Client(new ClientConfiguration(
             env('BLACKFIRE_CLIENT_ID'),
             env('BLACKFIRE_CLIENT_TOKEN')
         ));
+
+        $this->resolver = resolve(ResolvesTenants::class);
     }
 
     protected function compare(callable $test)
     {
         $probe = $this->blackfire->createProbe();
+        $probe->enable();
 
         // No identification.
         $test();
 
+        $probe->disable();
         $cleanProfile = $this->blackfire->endProbe($probe);
 
         // Identify and re-run.
+        $this->prepareTenantApplication();
         $probe = $this->blackfire->createProbe();
 
-        /** @var ResolvesTenants $resolver */
-        $resolver = resolve(ResolvesTenants::class);
-        $resolver->addModel(Hostname::class);
+        $probe->enable();
 
-        $this->createSystemTable('hostnames', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('fqdn');
-            $table->timestamps();
-        });
+        $test($this->tenant);
 
-        $hostname = factory(Hostname::class)->create();
-
-        $test($hostname);
+        $probe->disable();
 
         $profile = $this->blackfire->endProbe($probe);
 
-        $this->assertLessThan($cleanProfile->getMainCost()->getCpu(), $profile->getMainCost()->getCpu());
+        $this->assertLessThan($cleanProfile->getMainCost()->getWallTime(), $profile->getMainCost()->getWallTime());
     }
+
+    abstract public function prepareTenantApplication();
 }

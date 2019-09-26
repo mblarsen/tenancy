@@ -21,6 +21,7 @@ use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Tests\Performance\Mocks\Http\CleanController;
 use Tenancy\Tests\Performance\Mocks\Http\TenantController;
 use Tenancy\Tests\Performance\TestCase;
+use Tenancy\Tests\Identification\Http\Mocks\Hostname;
 
 class TenantIdentificationTest extends TestCase
 {
@@ -41,5 +42,18 @@ class TenantIdentificationTest extends TestCase
 
             $this->get('/');
         });
+    }
+
+    public function prepareTenantApplication()
+    {
+        $this->resolver->addModel(Hostname::class);
+
+        $this->createSystemTable('hostnames', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('fqdn');
+            $table->timestamps();
+        });
+
+        $this->tenant = factory(Hostname::class)->create();
     }
 }
