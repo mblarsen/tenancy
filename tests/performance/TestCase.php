@@ -35,6 +35,9 @@ abstract class TestCase extends Test
         Models::class,
         Views::class,
     ];
+    protected $additionalMocks = [
+        __DIR__.'/../unit/Identification/Http/Mocks/factories/'
+    ];
 
     /** @var Client */
     protected $blackfire;
