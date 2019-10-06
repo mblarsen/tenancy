@@ -108,6 +108,7 @@ jobs:
             - run: apt-get -yqq install libpq-dev libpng-dev default-mysql-client blackfire-agent blackfire-php
             - run: docker-php-ext-install pdo_mysql pdo_pgsql
             - run: blackfire-agent -register
+            - run: docker-php-ext-enable blackfire
             - run: mysql --host=mysql -e "grant all privileges on *.* to 'testing'@'%' with grant option;"
             - run: ./vendor/bin/phpunit --testsuite Performance
 
