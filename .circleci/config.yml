@@ -109,6 +109,8 @@ jobs:
             - run: docker-php-ext-install pdo_mysql pdo_pgsql
             - run: blackfire-agent -register
             - run: mysql --host=mysql -e "grant all privileges on *.* to 'testing'@'%' with grant option;"
+            - run: blackfire-agent -v
+            - run: php -d display_startup_errors=on --ri blackfire
             - run: ./vendor/bin/phpunit --testsuite Performance
 
 
