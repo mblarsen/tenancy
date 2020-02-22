@@ -58,7 +58,7 @@ class ConfiguresBroadcastsTest extends TestCase
      */
     public function configuration_initially_empty()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\ErrorException::class);
         $this->expectExceptionMessage('Driver [] is not supported.');
 
         $this->broadcast->driver('tenant');
@@ -89,7 +89,7 @@ class ConfiguresBroadcastsTest extends TestCase
 
         $this->assertNull($switched);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\ErrorException::class);
         $this->expectExceptionMessage('Driver [] is not supported.');
         $broadcaster = $this->getBroadcastManager()->driver('tenant');
     }
