@@ -29,7 +29,7 @@ class IdentificationProvider extends DriverProvider
 
     public function boot()
     {
-        $this->app->booted(function(){
+        $this->app->booted(function () {
             $this->app->extend('queue', function (QueueManager $queue) {
                 // Store tenant key and identifier on job payload when a tenant is identified.
                 $queue->createPayloadUsing($this->app->make(Middleware\SaveTenantOnQueuePayload::class));
